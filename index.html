@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang='ja'>
+<head>
+  <meta charset="utf-8">
+  <title>NINJA MAP</title>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js"></script>
+  <style>
+    body {
+      margin: 0; padding: 0;
+    }
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+<div id="map"></div>
+<script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css" type="text/css"/>
+
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1IjoibmluamF3b3JrcyIsImEiOiJjbDV1MXBzcXAwZXN6M2ZudTBwZHQ4anRlIn0.CdK_kkOTk9rhBp7XF_aRJA';
+  const map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/ninjaworks/ckrg052m91hqn17mfv3380gvy',
+  center: [136.233,35.142],
+  zoom: 13,
+  minZoom:6,
+  hash:true,
+  attributionControl:false,
+  pitch: 60, // pitch in degrees
+   });
+
+map.on('style.load', () => {
+map.setFog({}); // Set the default atmosphere style
+});
+map.addControl(  //ナビ
+  new MapboxDirections({
+    accessToken: mapboxgl.accessToken
+  }),
+  'top-left'
+  );
+
+  map.addControl(  //現在地
+  new mapboxgl.GeolocateControl({
+    positionOptions: {
+      enableHighAccuracy: true
+    },// When active the map will receive updates to the device's location as it changes.
+      trackUserLocation: true,
+// Draw an arrow next to the location dot to indicate which direction the device is heading.
+      showUserHeading: true
+    })
+    );
+
+
+</script>
+
+</body>
+</html>
